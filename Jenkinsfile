@@ -42,6 +42,9 @@ def ortVersion = 'JENKINS-SNAPSHOT'
 
 pipeline {
     agent none
+        triggers {
+            pollSCM '* * * * *'
+        }
 
     parameters {
         /*
@@ -225,15 +228,14 @@ pipeline {
         }
 
         /*
-         * This is connected to docker image with ort installed, nopt root set
+         * This is a "dummy" stage to build the Docker image explicitly (if needed) so that the time for building the
+         * image is not included in other stages.
          */
         stage('Build ORT Docker image') {
             agent {
-    agent { 
-        node {
-            label 'jenkins-agent-goes-here'
-            }
-      }
+                node {
+                    label 'jenkins-agent-goes-here'
+                    }
             }
 
             environment {
