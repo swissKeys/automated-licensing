@@ -230,9 +230,11 @@ pipeline {
          */
         stage('Build ORT Docker image') {
             agent {
-                node {
-                    label 'docker-agent-ort'
-                    }
+                dockerfile {
+                    filename 'Dockerfile-legacy'
+                    additionalBuildArgs DOCKER_BUILD_ARGS + ortVersion
+                    args DOCKER_RUN_ARGS
+                }
             }
 
             environment {
