@@ -42,9 +42,6 @@ def ortVersion = 'JENKINS-SNAPSHOT'
 
 pipeline {
     agent none
-        triggers {
-            pollSCM '* * * * *'
-        }
 
     parameters {
         /*
@@ -234,7 +231,7 @@ pipeline {
         stage('Build ORT Docker image') {
             agent {
                 node {
-                    label 'jenkins-agent-goes-here'
+                    label 'docker-agent-ort'
                     }
             }
 
