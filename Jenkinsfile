@@ -243,15 +243,21 @@ pipeline {
 
             steps {
                 sh '''
-                docker run ort --help
-                '''
+                ORT_OPTIONS="$LOG_LEVEL"
+
+                if [ "$STACKTRACE" = "true" ]; then
+                    ORT_OPTIONS="$ORT_OPTIONS --stacktrace"
+                fi
+
+                /opt/ort/bin/ort $ORT_OPTIONS --version
+                '''.stripIndent().trim()
             }
         }
 
         stage('Clone project') {
             agent {
                 dockerfile {
-                    filename 'Dockerfile-legacy'
+                    filename 'Dockerfile'
                     additionalBuildArgs DOCKER_BUILD_ARGS + ortVersion
                     args DOCKER_RUN_ARGS
                 }
