@@ -225,16 +225,15 @@ pipeline {
         }
 
         /*
-         * This is a "dummy" stage to build the Docker image explicitly (if needed) so that the time for building the
-         * image is not included in other stages.
+         * This is connected to docker image with ort installed, nopt root set
          */
         stage('Build ORT Docker image') {
             agent {
-                dockerfile {
-                    filename 'Dockerfile-legacy'
-                    additionalBuildArgs DOCKER_BUILD_ARGS + ortVersion
-                    args DOCKER_RUN_ARGS
-                }
+    agent { 
+        node {
+            label 'jenkins-agent-goes-here'
+            }
+      }
             }
 
             environment {
@@ -243,14 +242,8 @@ pipeline {
 
             steps {
                 sh '''
-                ORT_OPTIONS="$LOG_LEVEL"
-
-                if [ "$STACKTRACE" = "true" ]; then
-                    ORT_OPTIONS="$ORT_OPTIONS --stacktrace"
-                fi
-
-                /opt/ort/bin/ort $ORT_OPTIONS --version
-                '''.stripIndent().trim()
+                docker run ort --help
+                '''
             }
         }
 
@@ -362,7 +355,6 @@ pipeline {
                     args DOCKER_RUN_ARGS
                 }
             }
-
             environment {
                 HOME = "${env.WORKSPACE}@tmp"
                 PROJECT_DIR = "${env.HOME}/project"
