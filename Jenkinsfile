@@ -231,7 +231,7 @@ pipeline {
         stage('Build ORT Docker image') {
             agent {
                 dockerfile {
-                    filename 'Dockerfile-legacy'
+                    filename 'Dockerfile'
                     additionalBuildArgs DOCKER_BUILD_ARGS + ortVersion
                     args DOCKER_RUN_ARGS
                 }
