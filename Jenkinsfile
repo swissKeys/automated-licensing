@@ -23,7 +23,7 @@ import java.io.IOException
 
 import org.jenkinsci.plugins.pipeline.modeldefinition.Utils
 
-final DOCKER_BUILD_ARGS = ''
+final DOCKER_BUILD_ARGS = '--build-arg http_proxy=$http_proxy --build-arg https_proxy=$https_proxy --build-arg ORT_VERSION='
 
 // Disable the entry point to work around https://issues.jenkins-ci.org/browse/JENKINS-51307.
 final DOCKER_RUN_ARGS = '-e http_proxy -e https_proxy --entrypoint=""'
@@ -232,7 +232,8 @@ pipeline {
             agent {
                 docker {
                     image 'rebecca98/ort:version'
-                    args '-v /var/run/docker.sock:/var/run/docker.sock' // This line is optional. Use it if you need to access Docker from within the Docker container.
+                    additionalBuildArgs DOCKER_BUILD_ARGS
+                    args DOCKER_RUN_ARGS
                 }
             }
 
