@@ -238,7 +238,7 @@ pipeline {
             }
 
             environment {
-                HOME = "${env.WORKSPACE}@tmp"
+                DOCKER_HOST = 'tcp://172.18.0.2:2375'
             }
 
             steps {
