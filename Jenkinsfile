@@ -231,9 +231,7 @@ pipeline {
         stage('Build ORT Docker image') {
             agent {
                 dockerfile {
-                    filename 'Dockerfile'
-                    additionalBuildArgs DOCKER_BUILD_ARGS + ortVersion
-                    args DOCKER_RUN_ARGS
+                    image 'rebecca98/ort:version'
                 }
             }
 
