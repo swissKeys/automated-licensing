@@ -239,11 +239,12 @@ pipeline {
             environment {
                 HOME = "${env.WORKSPACE}@tmp"
             }
-
             steps {
-                sh '''
-                echo 'build ort'
-                '''
+                withEnv(['DOCKER_CERT_PATH=']) {
+                    sh '''
+                    echo 'ORT docker build'
+                    '''
+                }
             }
         }
 
