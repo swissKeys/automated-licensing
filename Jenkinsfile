@@ -232,8 +232,6 @@ pipeline {
             agent {
                 docker {
                     image 'rebecca98/ort:version'
-                    additionalBuildArgs DOCKER_BUILD_ARGS
-                    args DOCKER_RUN_ARGS
                 }
             }
 
