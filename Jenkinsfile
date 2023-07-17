@@ -224,25 +224,40 @@ pipeline {
             }
         }
 
-        stage('Pull ORT Docker image') {
+        /*
+         * This is a "dummy" stage to build the Docker image explicitly (if needed) so that the time for building the
+         * image is not included in other stages.
+         */
+        stage('Build ORT Docker image') {
             agent {
                 dockerfile {
-                    filename 'Dockerfile'
+                    filename 'Dockerfile-legacy'
                     additionalBuildArgs DOCKER_BUILD_ARGS + ortVersion
                     args DOCKER_RUN_ARGS
                 }
             }
+
+            environment {
+                HOME = "${env.WORKSPACE}@tmp"
+            }
+
             steps {
                 sh '''
-                echo 'Building ORT docker image'
-                '''
+                ORT_OPTIONS="$LOG_LEVEL"
+
+                if [ "$STACKTRACE" = "true" ]; then
+                    ORT_OPTIONS="$ORT_OPTIONS --stacktrace"
+                fi
+
+                /opt/ort/bin/ort $ORT_OPTIONS --version
+                '''.stripIndent().trim()
             }
         }
 
         stage('Clone project') {
             agent {
                 dockerfile {
-                    filename 'Dockerfile'
+                    filename 'Dockerfile-legacy'
                     additionalBuildArgs DOCKER_BUILD_ARGS + ortVersion
                     args DOCKER_RUN_ARGS
                 }
@@ -280,7 +295,7 @@ pipeline {
         stage('Clone ORT configuration') {
             agent {
                 dockerfile {
-                    filename 'Dockerfile'
+                    filename 'Dockerfile-legacy'
                     additionalBuildArgs DOCKER_BUILD_ARGS + ortVersion
                     args DOCKER_RUN_ARGS
                 }
@@ -342,11 +357,12 @@ pipeline {
         stage('Run ORT analyzer') {
             agent {
                 dockerfile {
-                    filename 'Dockerfile'
+                    filename 'Dockerfile-legacy'
                     additionalBuildArgs DOCKER_BUILD_ARGS + ortVersion
                     args DOCKER_RUN_ARGS
                 }
             }
+
             environment {
                 HOME = "${env.WORKSPACE}@tmp"
                 PROJECT_DIR = "${env.HOME}/project"
@@ -422,7 +438,7 @@ pipeline {
 
             agent {
                 dockerfile {
-                    filename 'Dockerfile'
+                    filename 'Dockerfile-legacy'
                     additionalBuildArgs DOCKER_BUILD_ARGS + ortVersion
                     args DOCKER_RUN_ARGS
                 }
@@ -535,7 +551,7 @@ pipeline {
 
             agent {
                 dockerfile {
-                    filename 'Dockerfile'
+                    filename 'Dockerfile-legacy'
                     additionalBuildArgs DOCKER_BUILD_ARGS + ortVersion
                     args DOCKER_RUN_ARGS
                 }
@@ -594,7 +610,7 @@ pipeline {
 
             agent {
                 dockerfile {
-                    filename 'Dockerfile'
+                    filename 'Dockerfile-legacy'
                     additionalBuildArgs DOCKER_BUILD_ARGS + ortVersion
                     args DOCKER_RUN_ARGS
                 }
@@ -646,7 +662,7 @@ pipeline {
 
             agent {
                 dockerfile {
-                    filename 'Dockerfile'
+                    filename 'Dockerfile-legacy'
                     additionalBuildArgs DOCKER_BUILD_ARGS + ortVersion
                     args DOCKER_RUN_ARGS
                 }
@@ -682,4 +698,3 @@ pipeline {
         }
     }
 }
-
