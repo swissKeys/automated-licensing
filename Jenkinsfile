@@ -225,6 +225,7 @@ pipeline {
         }
 
         stage('Pull ORT Docker image') {
+            agent any
             steps {
                 sh '''
                 echo 'Pulling ORT docker image'
