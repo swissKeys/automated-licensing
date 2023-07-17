@@ -241,7 +241,7 @@ pipeline {
                 HOME = "${env.WORKSPACE}@tmp"
             }
             steps {
-                withEnv(['DOCKER_CERT_PATH=']) {
+                withEnv(['DOCKER_CERT_PATH=', 'DOCKER_TLS_VERIFY=']) {
                     sh '''
                     echo 'ORT docker build'
                     '''
