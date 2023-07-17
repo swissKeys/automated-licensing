@@ -224,26 +224,12 @@ pipeline {
             }
         }
 
-        /*
-         * This is a "dummy" stage to build the Docker image explicitly (if needed) so that the time for building the
-         * image is not included in other stages.
-         */
-        stage('Build ORT Docker image') {
-            agent {
-                docker {
-                    image 'rebecca98/ort:version'
-                }
-            }
-
-            environment {
-                HOME = "${env.WORKSPACE}@tmp"
-            }
+        stage('Pull ORT Docker image') {
             steps {
-                withEnv(['DOCKER_CERT_PATH=', 'DOCKER_TLS_VERIFY=']) {
-                    sh '''
-                    echo 'ORT docker build'
-                    '''
-                }
+                sh '''
+                echo 'Pulling ORT docker image'
+                docker pull rebecca98/ort:version
+                '''
             }
         }
 
