@@ -231,7 +231,7 @@ pipeline {
         stage('Build ORT Docker image') {
             agent {
                 docker {
-                    image 'rebecca98/ort'
+                    image 'rebecca98/ort:version'
                     args '-v /var/run/docker.sock:/var/run/docker.sock' // This line is optional. Use it if you need to access Docker from within the Docker container.
                 }
             }
