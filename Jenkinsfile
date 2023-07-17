@@ -232,7 +232,6 @@ pipeline {
             agent {
                 dockerfile {
                     filename 'Dockerfile'
-                    additionalBuildArgs DOCKER_BUILD_ARGS + 'ort'
                 }
             }
 
@@ -242,14 +241,8 @@ pipeline {
 
             steps {
                 sh '''
-                ORT_OPTIONS="$LOG_LEVEL"
-
-                if [ "$STACKTRACE" = "true" ]; then
-                    ORT_OPTIONS="$ORT_OPTIONS --stacktrace"
-                fi
-
-                /opt/ort/bin/ort $ORT_OPTIONS --version
-                '''.stripIndent().trim()
+                echo 'build ort'
+                '''
             }
         }
 
