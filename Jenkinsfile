@@ -23,7 +23,7 @@ import java.io.IOException
 
 import org.jenkinsci.plugins.pipeline.modeldefinition.Utils
 
-final DOCKER_BUILD_ARGS = '--build-arg http_proxy=$http_proxy --build-arg https_proxy=$https_proxy --build-arg ORT_VERSION='
+final DOCKER_BUILD_ARGS = ''
 
 // Disable the entry point to work around https://issues.jenkins-ci.org/browse/JENKINS-51307.
 final DOCKER_RUN_ARGS = '-e http_proxy -e https_proxy --entrypoint=""'
@@ -232,8 +232,7 @@ pipeline {
             agent {
                 dockerfile {
                     filename 'Dockerfile'
-                    additionalBuildArgs DOCKER_BUILD_ARGS + ortVersion
-                    args DOCKER_RUN_ARGS
+                    additionalBuildArgs DOCKER_BUILD_ARGS + 'ort'
                 }
             }
 
@@ -295,7 +294,7 @@ pipeline {
         stage('Clone ORT configuration') {
             agent {
                 dockerfile {
-                    filename 'Dockerfile-legacy'
+                    filename 'Dockerfile'
                     additionalBuildArgs DOCKER_BUILD_ARGS + ortVersion
                     args DOCKER_RUN_ARGS
                 }
@@ -357,7 +356,7 @@ pipeline {
         stage('Run ORT analyzer') {
             agent {
                 dockerfile {
-                    filename 'Dockerfile-legacy'
+                    filename 'Dockerfile'
                     additionalBuildArgs DOCKER_BUILD_ARGS + ortVersion
                     args DOCKER_RUN_ARGS
                 }
@@ -437,7 +436,7 @@ pipeline {
 
             agent {
                 dockerfile {
-                    filename 'Dockerfile-legacy'
+                    filename 'Dockerfile'
                     additionalBuildArgs DOCKER_BUILD_ARGS + ortVersion
                     args DOCKER_RUN_ARGS
                 }
@@ -550,7 +549,7 @@ pipeline {
 
             agent {
                 dockerfile {
-                    filename 'Dockerfile-legacy'
+                    filename 'Dockerfile'
                     additionalBuildArgs DOCKER_BUILD_ARGS + ortVersion
                     args DOCKER_RUN_ARGS
                 }
@@ -609,7 +608,7 @@ pipeline {
 
             agent {
                 dockerfile {
-                    filename 'Dockerfile-legacy'
+                    filename 'Dockerfile'
                     additionalBuildArgs DOCKER_BUILD_ARGS + ortVersion
                     args DOCKER_RUN_ARGS
                 }
@@ -661,7 +660,7 @@ pipeline {
 
             agent {
                 dockerfile {
-                    filename 'Dockerfile-legacy'
+                    filename 'Dockerfile'
                     additionalBuildArgs DOCKER_BUILD_ARGS + ortVersion
                     args DOCKER_RUN_ARGS
                 }
