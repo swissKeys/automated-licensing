@@ -51,7 +51,7 @@ pipeline {
         string(
             name: 'PROJECT_VCS_URL',
             description: 'The VCS clone URL of the project.',
-            defaultValue: 'https://github.com/vdurmont/semver4j.git'
+            defaultValue: 'https://github.com/swissKeys/automated-licensing.git'
         )
 
         string(
