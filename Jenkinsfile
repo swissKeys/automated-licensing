@@ -231,7 +231,7 @@ pipeline {
         stage('Build ORT Docker image') {
             agent {
                 dockerfile {
-                    image 'rebecca98/ort:version'
+                    filename 'Dockerfile'
                 }
             }
 
