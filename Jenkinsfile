@@ -229,7 +229,7 @@ pipeline {
          * image is not included in other stages.
          */
         stage('Build ORT Docker image') {
-            agent none
+            agent any
             steps {
                 sh '''
                 docker build -t ort .
