@@ -230,9 +230,7 @@ pipeline {
          */
         stage('Build ORT Docker image') {
             agent {
-                dockerfile {
-                    filename 'Dockerfile'
-                }
+                label 'docker-agent-ort'
             }
 
             environment {
