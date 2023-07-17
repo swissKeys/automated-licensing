@@ -229,11 +229,28 @@ pipeline {
          * image is not included in other stages.
          */
         stage('Build ORT Docker image') {
-            agent any
+            agent {
+                dockerfile {
+                    filename 'Dockerfile'
+                    additionalBuildArgs DOCKER_BUILD_ARGS + ortVersion
+                    args DOCKER_RUN_ARGS
+                }
+            }
+
+            environment {
+                HOME = "${env.WORKSPACE}@tmp"
+            }
+
             steps {
                 sh '''
-                docker build -t ort .
-                '''
+                ORT_OPTIONS="$LOG_LEVEL"
+
+                if [ "$STACKTRACE" = "true" ]; then
+                    ORT_OPTIONS="$ORT_OPTIONS --stacktrace"
+                fi
+
+                /opt/ort/bin/ort $ORT_OPTIONS --version
+                '''.stripIndent().trim()
             }
         }
 
