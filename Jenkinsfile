@@ -225,11 +225,16 @@ pipeline {
         }
 
         stage('Pull ORT Docker image') {
-            agent any
+            agent {
+                dockerfile {
+                    filename 'Dockerfile'
+                    additionalBuildArgs DOCKER_BUILD_ARGS + ortVersion
+                    args DOCKER_RUN_ARGS
+                }
+            }
             steps {
                 sh '''
-                echo 'Pulling ORT docker image'
-                docker pull rebecca98/ort:version
+                echo 'Building ORT docker image'
                 '''
             }
         }
