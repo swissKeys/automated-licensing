@@ -229,17 +229,15 @@ pipeline {
          * image is not included in other stages.
          */
         stage('Build ORT Docker image') {
-            agent {
-                dockerfile {
-                    filename 'Dockerfile'
-                    additionalBuildArgs DOCKER_BUILD_ARGS + ortVersion
-                    args DOCKER_RUN_ARGS
-                }
+            agent any
+
+            environment {
+                HOME = "${env.WORKSPACE}@tmp"
             }
 
             steps {
                 sh '''
-                echo "DOCKER_HOST=$DOCKER_HOST"
+                docker pull rebecca98/ort:version
                 '''
             }
         }
