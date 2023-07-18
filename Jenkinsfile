@@ -43,10 +43,6 @@ def ortVersion = 'JENKINS-SNAPSHOT'
 pipeline {
     agent none
 
-    environment {
-                DOCKER_HOST = 'tcp://172.18.0.2:2375'
-    }
-
     parameters {
         /*
          * Parameters about the project to run ORT on.
