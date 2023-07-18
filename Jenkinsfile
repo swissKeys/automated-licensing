@@ -224,24 +224,6 @@ pipeline {
             }
         }
 
-        /*
-         * This is a "dummy" stage to build the Docker image explicitly (if needed) so that the time for building the
-         * image is not included in other stages.
-         */
-        stage('Build ORT Docker image') {
-            agent any
-
-            environment {
-                HOME = "${env.WORKSPACE}@tmp"
-            }
-
-            steps {
-                sh '''
-                docker pull rebecca98/ort:version
-                '''
-            }
-        }
-
         stage('Clone project') {
             agent {
                 dockerfile {
