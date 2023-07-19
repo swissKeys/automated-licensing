@@ -240,9 +240,7 @@ pipeline {
             }
 
             steps {
-                sh '''
-                echo 'build image'
-                '''
+                echo 'Hello, world!'
             }
         }
 
