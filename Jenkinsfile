@@ -235,52 +235,9 @@ pipeline {
                     }
             }
 
-            environment {
-                HOME = "${env.WORKSPACE}@tmp"
-            }
-
             steps {
                 echo 'Hello, world!'
             }
         }
-
-        stage('Clone project') {
-            agent {
-                dockerfile {
-                    filename 'Dockerfile-legacy'
-                    additionalBuildArgs DOCKER_BUILD_ARGS + ortVersion
-                    args DOCKER_RUN_ARGS
-                }
-            }
-
-            environment {
-                HOME = "${env.WORKSPACE}@tmp"
-                PROJECT_DIR = "${env.HOME}/project"
-            }
-
-            steps {
-                withCredentials(projectVcsCredentials) {
-                    sh '''
-                    ORT_OPTIONS="$LOG_LEVEL"
-
-                    if [ "$STACKTRACE" = "true" ]; then
-                        ORT_OPTIONS="$ORT_OPTIONS --stacktrace"
-                    fi
-
-                    if [ -n "$PROJECT_VCS_REVISION" ]; then
-                        VCS_REVISION_OPTION="--vcs-revision $PROJECT_VCS_REVISION"
-                    fi
-
-                    echo "default login $LOGIN password $PASSWORD" > $HOME/.netrc
-
-                    rm -fr "$PROJECT_DIR"
-                    /opt/ort/bin/ort $ORT_OPTIONS download --project-url $PROJECT_VCS_URL $VCS_REVISION_OPTION -o "$PROJECT_DIR/source"
-
-                    rm -f $HOME/.netrc
-                    '''.stripIndent().trim()
-                }
-            }
-        }
-
     }
 }
