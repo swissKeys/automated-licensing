@@ -41,7 +41,7 @@ def ortConfigVcsCredentials = []
 def ortVersion = 'JENKINS-SNAPSHOT'
 
 pipeline {
-    agent none
+    agent { label 'docker-agent-ort' }
 
     parameters {
         /*
@@ -204,19 +204,15 @@ pipeline {
             defaultValue: true
         )
     }
-
+    options { skipDefaultCheckout true }
     stages {
 
         /*
          * This is a "dummy" stage to build the Docker image explicitly (if needed) so that the time for building the
          * image is not included in other stages.
          */
+
         stage('Build ORT Docker image') {
-            agent { 
-                node {
-                    label 'docker-agent-ort'
-                    }
-            }
 
             steps {
                 echo 'Hello, world!'
