@@ -209,12 +209,11 @@ pipeline {
 
 
         stage('Build ORT Docker image') {
-
+            agent { label 'docker-agent-ort' }
             steps {
-            sh '''
-            #!/bin/bash
-            echo 'hello world'
-            '''
+                sh '''
+                echo 'hello world'
+                '''
             }
         }
     }
