@@ -211,7 +211,15 @@ pipeline {
         stage('Build ORT Docker image') {
 
             steps {
-                echo 'Hello world'
+                sh '''
+                ORT_OPTIONS="$LOG_LEVEL"
+
+                if [ "$STACKTRACE" = "true" ]; then
+                    ORT_OPTIONS="$ORT_OPTIONS --stacktrace"
+                fi
+
+                /opt/ort/bin/ort $ORT_OPTIONS --version
+                '''.stripIndent().trim()
             }
         }
     }
