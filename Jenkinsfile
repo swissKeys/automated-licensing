@@ -225,8 +225,13 @@ pipeline {
         }
 
         stage('Build ORT Docker image') {
-            agent { label 'docker-agent-python' }
-            options { skipDefaultCheckout true }
+            agent {
+                dockerfile {
+                    filename 'Dockerfile-legacy'
+                    additionalBuildArgs DOCKER_BUILD_ARGS + ortVersion
+                    args DOCKER_RUN_ARGS
+                }
+            }
             steps {
                 sh'''
                 echo 'hello world'
