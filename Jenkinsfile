@@ -225,10 +225,11 @@ pipeline {
         }
 
         stage('Build ORT Docker image') {
-            agent { label 'docker-agent-ort' }
+            agent { label 'docker-agent-python' }
             options { skipDefaultCheckout true }
             steps {
                 sh'''
+                echo 'hello world'
                 '''
             }
         }
