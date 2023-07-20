@@ -228,6 +228,7 @@ pipeline {
             agent {
                 dockerfile {
                     filename 'Dockerfile-legacy'
+                    additionalBuildArgs  '--host tcp://172.18.0.2:2375'
                 }
             }
             options { skipDefaultCheckout true }
