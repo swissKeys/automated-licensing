@@ -208,6 +208,7 @@ pipeline {
 
         stage('Build ORT Docker image') {
             agent { label 'docker-agent-ort' }
+            options { skipDefaultCheckout true }
             steps {
                 sh '''
                 echo 'hello world'
