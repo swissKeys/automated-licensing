@@ -207,13 +207,29 @@ pipeline {
     options { skipDefaultCheckout true }
     stages {
 
+        stage('Configure pipeline') {
+            agent any
+
+            steps {
+                script {
+                    if (!params.PROJECT_VCS_CREDENTIALS.allWhitespace) {
+                        projectVcsCredentials += usernamePassword(credentialsId: params.PROJECT_VCS_CREDENTIALS, usernameVariable: 'LOGIN', passwordVariable: 'PASSWORD')
+                    }
+
+                    if (!params.ORT_CONFIG_VCS_CREDENTIALS.allWhitespace) {
+                        ortConfigVcsCredentials += usernamePassword(credentialsId: params.ORT_CONFIG_VCS_CREDENTIALS, usernameVariable: 'LOGIN', passwordVariable: 'PASSWORD')
+                    }
+
+                    ortVersion = env.GIT_COMMIT.take(10)
+                }
+            }
+        }
+
 
         stage('Build ORT Docker image') {
 
             steps {
-                sh'''
-                echo 'hello world'
-                '''
+                echo 'Hello world'
             }
         }
     }
