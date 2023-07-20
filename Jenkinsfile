@@ -232,6 +232,7 @@ pipeline {
                     args DOCKER_RUN_ARGS
                 }
             }
+            options { skipDefaultCheckout true }
             steps {
                 sh'''
                 echo 'hello world'
