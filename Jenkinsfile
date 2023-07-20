@@ -228,8 +228,6 @@ pipeline {
             agent {
                 dockerfile {
                     filename 'Dockerfile-legacy'
-                    additionalBuildArgs DOCKER_BUILD_ARGS + ortVersion
-                    args DOCKER_RUN_ARGS
                 }
             }
             options { skipDefaultCheckout true }
