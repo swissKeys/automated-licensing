@@ -227,7 +227,7 @@ pipeline {
         stage('Build ORT Docker image') {
             agent {
                 docker {
-                    image 'rebecca98/jenkins-ort:1.0'
+                    image 'rebecca98/jenkins-python-agent'
                     // Run the container on the node specified at the
                     // top-level of the Pipeline, in the same workspace,
                     // rather than on a new node entirely:
