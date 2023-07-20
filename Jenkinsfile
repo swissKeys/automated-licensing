@@ -211,9 +211,10 @@ pipeline {
         stage('Build ORT Docker image') {
 
             steps {
-                sh '''
-                echo 'hello world'
-                '''
+            sh '''
+            #!/bin/bash
+            echo 'hello world'
+            '''
             }
         }
     }
