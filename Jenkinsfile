@@ -227,7 +227,7 @@ pipeline {
         stage('Build ORT Docker image') {
             agent {
                 docker {
-                    image 'gradle:8.2.0-jdk17-alpine'
+                    image 'rebecca98/jenkins-ort:1.0'
                     // Run the container on the node specified at the
                     // top-level of the Pipeline, in the same workspace,
                     // rather than on a new node entirely:
@@ -235,7 +235,7 @@ pipeline {
                 }
             }
             steps {
-                sh 'gradle --version'
+                sh 'echo hello'
             }
         }
     }
